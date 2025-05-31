@@ -1,0 +1,78 @@
+# Directory settings
+directories:
+  run_dir: "../logs/{timestamp}"
+  webcrawler_dir_name: "crawled_links"
+  analyser_dir_name: "processed_links"
+  driver_dir: "chromedriver"
+
+# File paths settings
+files:
+  log_file: "log.txt"
+  driver_file: "chromedriver"
+
+# Analyser settings
+analyser:
+  url_column_name: "url"
+  num_occurrences_column_name: "num_occurrences"
+  location_column_name: "loc"
+
+# BlackListFilter settings
+blacklist_filter:
+  link_words:
+    - "blog"
+    - "quora"
+    - "github"
+    - "forum"
+    - "reddit"
+    - "medium"
+    - "linkedin"
+    - "fiverr"
+    - "guide"
+    - "how"
+    - "play.google.com"
+    - "canva.com"
+    - "wikipedia"
+    - "wix.com"
+    - "tutorial"
+    - "news"
+    - "article"
+    - "story"
+    - "personal"
+    - "review"
+    - "community"
+    - "opinion"
+    - "support"
+    - "help"
+    - "faq"
+    - "documentation"
+    - "wiki"
+    - "about"
+    - "research"
+    - "post"
+    - "chronicle"
+    - "diary"
+    - "stories"
+    - "journal"
+    - "nytimes"
+    - "cnbc"
+    - "resources"
+    - "technology"
+    - "apps.apple.com"
+    - "posbytz.com"
+    - "investopedia.com"
+
+# Search settings
+search:
+  default_language: "English"
+  search_pages: 5
+  website: "https://www.bing.com/"
+  company_identifiers:
+    - "Contact Us Page"
+    - "Book a Demo text"
+  headless_mode: true
+  headers:
+    User-Agent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.1 Safari/605.1.15'
+    Connection: 'keep-alive'
+
+# Timestamp format settings
+timestamp_format: "%Y_%m_%d_%H_%M_%S"

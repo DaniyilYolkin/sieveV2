@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Query - Sieve.ai</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav class="top-nav">
+        <a href="{{ url_for('home') }}" class="home-link-top-left">Home</a>
+        {% if current_user.is_authenticated %}
+            <a href="{{ url_for('query') }}">Query</a>
+            <a href="{{ url_for('logout') }}">Log Out</a>
+            <a href="#">{{ current_user.username }}</a>
+        {% else %}
+            <a href="{{ url_for('signup') }}">Sign Up</a>
+            <a href="{{ url_for('signin') }}">Sign In</a>
+        {% endif %}
+    </nav>
+
+    <div class="page-container">
+        <h2>Create a New Query</h2>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class="flashes">
+                {% for category, message in messages %}
+                    <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST" action="{{ url_for('query') }}" class="query-form">
+            {{ form.csrf_token }}
+            <div class="form-group">
+                {{ form.keywords.label(class="form-label") }}
+                {{ form.keywords(class="form-control", placeholder="Enter keywords...") }}
+                {% for error in form.keywords.errors %}
+                    <span class="error">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                {{ form.country.label(class="form-label") }}
+                {{ form.country(class="form-control") }}
+                {% for error in form.country.errors %}
+                    <span class="error">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                {{ form.whitelist_words.label(class="form-label") }}
+                {{ form.whitelist_words(class="form-control", placeholder="e.g., word1, phrase two, word3") }}
+                {% for error in form.whitelist_words.errors %}
+                    <span class="error">{{ error }}</span>
+                {% endfor %}
+            </div>
+            {{ form.submit(class="btn-submit") }}
+        </form>
+
+        <hr>
+        <h2>Your Submitted Queries</h2>
+        <div class="queries-list">
+            {% if queries %}
+                <ul>
+                {% for query_item in queries %}
+                    <li>
+                        <strong>Keywords:</strong> {{ query_item.keywords }}<br>
+                        <strong>Country:</strong> {{ query_item.country }}<br>
+                        {% if query_item.whitelist_words %}
+                            <strong>Whitelist:</strong> <small>{{ query_item.whitelist_words | truncate(50) }}</small><br>
+                        {% endif %}
+                        <strong>Status:</strong> <span class="status-{{ query_item.status | lower }}">{{ query_item.status }}</span><br>
+                        <strong>Submitted:</strong> {{ query_item.created_at.strftime('%Y-%m-%d %H:%M') }}
+
+                        {% if query_item.status == 'completed' %}
+                            <a href="{{ url_for('download_result', query_id=query_item.id) }}" class="btn-download">Download Results</a>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                <p>You haven't submitted any queries yet.</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

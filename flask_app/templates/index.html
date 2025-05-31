@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sieve.ai - Find Your Next Business Partners</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav class="top-nav">
+    {% if current_user.is_authenticated %}
+        <a href="{{ url_for('query') }}">Query</a>
+        <a href="{{ url_for('logout') }}">Log Out</a>
+        <a href="#">{{ current_user.username }}</a>
+    {% else %}
+        <a href="{{ url_for('signup') }}">Sign Up</a>
+        <a href="{{ url_for('signin') }}">Sign In</a>
+    {% endif %}
+</nav>
+    <div class="center-container">
+        <h1>Sieve.ai</h1>
+        <p>Leverage AI to find your next business partners</p>
+    </div>
+</body>
+</html>
